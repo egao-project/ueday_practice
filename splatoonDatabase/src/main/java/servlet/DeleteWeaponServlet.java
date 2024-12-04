@@ -10,13 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import model.DeleteAccountLogic;
+import model.DeleteWeaponLogic;
 
 /**
  * Servlet implementation class AccountEditServlet
  */
-@WebServlet("/DeleteAccountServlet")
-public class DeleteAccountServlet extends HttpServlet {
+@WebServlet("/DeleteWeaponServlet")
+public class DeleteWeaponServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,12 +26,12 @@ public class DeleteAccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		String[] userIds = request.getParameterValues("userIds");
+		String[] weaponIds = request.getParameterValues("weaponIds");
 
-		if (userIds != null && userIds.length > 0) {
+		if (weaponIds != null && weaponIds.length > 0) {
 
-			DeleteAccountLogic deleteAccountLogic = new DeleteAccountLogic();
-			Boolean result = deleteAccountLogic.execute(userIds);
+			DeleteWeaponLogic deleteWeaponLogic = new DeleteWeaponLogic();
+			Boolean result = deleteWeaponLogic.execute(weaponIds);
 
 			if (!result) {
 
@@ -40,18 +40,17 @@ public class DeleteAccountServlet extends HttpServlet {
 			} else {
 
 				request.setAttribute("message", "削除に成功しました");
-
 			}
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/deleteAccountResult.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/deleteWeaponResult.jsp");
 			dispatcher.forward(request, response);
 
 		} else {
 
 			HttpSession session = request.getSession();
-			session.setAttribute("message", "削除対象のアカウントを選択してください");
+			session.setAttribute("message", "削除対象のブキを選択してください");
 
-			response.sendRedirect("AccountListServlet");
+			response.sendRedirect("WeaponListServlet");
 
 		}
 

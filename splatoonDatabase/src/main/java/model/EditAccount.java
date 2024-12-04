@@ -10,9 +10,8 @@ public class EditAccount implements Serializable {
 
 	}
 
-	public EditAccount(String userId, String newName) {
+	public EditAccount(String userId) {
 		this.userId = userId;
-		this.newName = newName;
 	}
 
 	public String getUserId() {

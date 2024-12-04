@@ -8,12 +8,12 @@
 <title>ログイン成功</title>
 </head>
 <body>
-ようこそ<c:out value="${userId}" />さん
-<br>
-<!--あなたのお気に入り武器は-->
-<br>
-<a href="WeaponListServlet">ブキ一覧</a>
-<a href="AccountListServlet">アカウント一覧</a>
+	ようこそ<c:out value="${userId}" />さん
+	<br>
+	
+	<br>
+	<a href="WeaponListServlet">ブキ一覧</a>
+	<a href="AccountListServlet">アカウント一覧</a>
 <a href="TopServlet">トップへ</a>
 </body>
 </html>

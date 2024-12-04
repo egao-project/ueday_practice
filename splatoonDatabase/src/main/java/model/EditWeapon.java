@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Weapon implements Serializable {
+public class EditWeapon implements Serializable {
 	private int weaponId;
 	private String type;
 	private String name;
@@ -11,36 +11,21 @@ public class Weapon implements Serializable {
 	private String sub;
 	private String special;
 
-	public Weapon() {
+	public EditWeapon() {
+
 	}
 
-	public Weapon(int weaponId, String type, String name, String range, String damage, String sub,
-			String special) {
+	public EditWeapon(int weaponId) {
+		// TODO 自動生成されたコンストラクター・スタブ
 		this.weaponId = weaponId;
-		this.type = type;
-		this.name = name;
-		this.range = range;
-		this.damage = damage;
-		this.sub = sub;
-		this.special = special;
-	}
-
-	public Weapon(String type, String name, String range, String damage, String sub,
-			String special) {
-		this.type = type;
-		this.name = name;
-		this.range = range;
-		this.damage = damage;
-		this.sub = sub;
-		this.special = special;
 	}
 
 	public int getWeaponId() {
 		return weaponId;
 	}
 
-	public void setWeaponId(int weaponId) {
-		this.weaponId = weaponId;
+	public void setWeaponId(int weaponid) {
+		this.weaponId = weaponid;
 	}
 
 	public String getType() {

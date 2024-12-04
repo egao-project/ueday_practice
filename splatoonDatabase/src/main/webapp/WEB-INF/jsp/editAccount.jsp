@@ -14,6 +14,6 @@
     <br><br>
     <input type="submit" value="更新">
 </form>
-<a href="AccountListServlet">戻る</a>
+    <a href="AccountListServlet">戻る</a>
 </body>
 </html>

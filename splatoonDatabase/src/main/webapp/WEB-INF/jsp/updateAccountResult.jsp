@@ -8,7 +8,7 @@
 <title>更新完了</title>
 </head>
 <body>
-<p><c:out value="${message}" /></p>
-<a href="TopServlet">トップへ</a>
+	<p><c:out value="${message}" /></p>
+	<a href="AccountListServlet">ユーザ一覧画面へ</a>
 </body>
 </html>

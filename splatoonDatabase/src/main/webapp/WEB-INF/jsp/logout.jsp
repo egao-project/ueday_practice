@@ -7,7 +7,7 @@
 <title>ログアウト画面</title>
 </head>
 <body>
-ログアウトしました<br>
-<a href="TopServlet">トップへ</a>
+	ログアウトしました<br>
+	<a href="TopServlet">トップへ</a>
 </body>
 </html>

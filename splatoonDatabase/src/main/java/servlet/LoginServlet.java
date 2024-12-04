@@ -26,8 +26,20 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+
+		if (userId != null) {
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/loginSuccess.jsp");
+			dispatcher.forward(request, response);
+
+		} else {
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
+		}
+
 	}
 
 	/**
@@ -36,7 +48,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
 
@@ -45,13 +56,17 @@ public class LoginServlet extends HttpServlet {
 		boolean result = bo.execute(loginUser);
 
 		if (result) {
+
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/loginSuccess.jsp");
 			dispatcher.forward(request, response);
+
 		} else {
+
 			response.sendRedirect("LoginServlet");
+
 		}
 
 	}

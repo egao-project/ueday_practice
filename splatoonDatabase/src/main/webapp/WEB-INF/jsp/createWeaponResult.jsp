@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ユーザ登録完了</title>
+<title>ブキ登録完了</title>
 </head>
 <body>
 	<p><c:out value="${message}" /></p>
-	<a href="AccountListServlet">ユーザ一覧画面へ</a>
+	<a href="WeaponListServlet">ブキ一覧画面へ</a>
 </body>
 </html>

@@ -9,6 +9,6 @@
 <body>
 メニュー<br>
 <a href="LoginServlet">・ログイン</a><br>
-<a href="CreateAccount">・ユーザ登録 </a><br>
+<a href="CreateAccountServlet">・ユーザ登録 </a><br>
 </body>
 </html>

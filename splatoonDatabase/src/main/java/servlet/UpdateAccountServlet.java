@@ -24,22 +24,33 @@ public class UpdateAccountServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
 		String newName = request.getParameter("newName");
 
 		if (userId == null || newName == null || newName.isEmpty()) {
+
 			response.sendRedirect("AccountListServlet");
 			return;
+
 		} else {
+
 			UpdateAccountLogic updateAccountLogic = new UpdateAccountLogic();
 			boolean result = updateAccountLogic.execute(userId, newName);
 
 			if (!result) {
+
 				request.setAttribute("message", "更新に失敗しました");
+
+			} else {
+
+				request.setAttribute("message", "更新に成功しました");
+
 			}
-			request.setAttribute("message", "更新に成功しました");
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/updateAccountResult.jsp");
 			dispatcher.forward(request, response);
+
 		}
 	}
 
