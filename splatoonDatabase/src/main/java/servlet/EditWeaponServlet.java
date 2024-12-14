@@ -8,7 +8,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+
+import model.GetEditWeaponDataLogic;
+import model.Weapon;
 
 /**
  * Servlet implementation class EditWeaponServlet
@@ -23,18 +25,12 @@ public class EditWeaponServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String selectedWeaponId = request.getParameter("weaponId");
+		GetEditWeaponDataLogic getEditWeaponDataLogic = new GetEditWeaponDataLogic();
+		// ブキIDで武器情報を取得
+		Weapon weapon = getEditWeaponDataLogic.getEditWeaponDataLogic(selectedWeaponId);
 
-		String selectedWeaponId = request.getParameter("weaponIds");
-
-		//		String type = request.getParameter("type");
-		//		String name = request.getParameter("name");
-		//		String range = request.getParameter("range");
-		//		String damage = request.getParameter("damage");
-		//		String sub = request.getParameter("sub");
-		//		String special = request.getParameter("special");
-		//
-		//		Weapon weapon = new Weapon(type, name, range, damage, sub, special);
-		//		request.setAttribute("weapon", weapon);
+		request.setAttribute("weapon", weapon);
 
 		if (selectedWeaponId != null) {
 			int weaponId = Integer.parseInt(selectedWeaponId);
@@ -42,12 +38,14 @@ public class EditWeaponServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/editWeapon.jsp");
 			dispatcher.forward(request, response);
+
 		} else {
 
-			HttpSession session = request.getSession();
-			session.setAttribute("message", "ブキが選択されていません");
+			request.setAttribute("message", "ブキが選択されていません");
 
-			response.sendRedirect("WeaponListServlet");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WeaponListServlet");
+			dispatcher.forward(request, response);
+
 		}
 
 	}

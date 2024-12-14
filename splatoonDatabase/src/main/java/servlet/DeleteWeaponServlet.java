@@ -26,7 +26,7 @@ public class DeleteWeaponServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		String[] weaponIds = request.getParameterValues("weaponIds");
+		String[] weaponIds = request.getParameterValues("weaponId");
 
 		if (weaponIds != null && weaponIds.length > 0) {
 

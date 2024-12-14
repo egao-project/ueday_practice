@@ -57,7 +57,47 @@ public class WeaponListDAO {
 		return weaponList;
 	}
 
-	//	public boolean updateWeapon(EditWeapon editWeapon) {
+	//ブキ編集の際に、初期値を設定するためのメソッド
+	public Weapon editWeaponData(String weaponId) {
+
+		Weapon weapon = new Weapon();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+		} catch (ClassNotFoundException e) {
+			// TODO: handle exception
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+
+		//データベースに接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			//SELECT文を準備
+			String sql = "SELECT type, name, weapon_range, damage, sub, special FROM weapons WHERE weapon_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, weaponId);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String type = rs.getString("type");
+				String name = rs.getString("name");
+				String range = rs.getString("weapon_range");
+				String damage = rs.getString("damage");
+				String sub = rs.getString("sub");
+				String special = rs.getString("special");
+				weapon = new Weapon(type, name, range, damage, sub, special);
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("エラーが発生しました");
+			return null;
+		}
+		return weapon;
+	}
+
 	public boolean updateWeapon(Weapon editWeapon) {
 		// TODO 自動生成されたメソッド・スタブ
 		int weaponId = editWeapon.getWeaponId();

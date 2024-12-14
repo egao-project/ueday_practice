@@ -11,7 +11,7 @@
 <h1>ブキ編集</h1>
 <c:out value="${weapon.name}"></c:out>
 	<form action="UpdateWeaponServlet" method="post">
-		<input type="hidden" name="weaponId" value="${weaponId} ">
+		<input type="hidden" name="weaponId" value="${weaponId}">
 		名前:<input type="text" name="name" value="${weapon.name}" required><br>
 		種類:<input type="text" name="type" value="${weapon.type}" required><br>
 		射程:<input type="text" name="range" value="${weapon.range}" required><br>

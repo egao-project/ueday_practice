@@ -1,4 +1,3 @@
-/model/
-/servlet/
 /dao/
-/filter/
+/servlet/
+/model/
