@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.CreateWeaponLogic;
+import model.ValueCheck;
 import model.Weapon;
 
 /**
@@ -42,6 +44,17 @@ public class CreateWeaponServlet extends HttpServlet {
 			String damage = request.getParameter("damage");
 			String sub = request.getParameter("sub");
 			String special = request.getParameter("special");
+
+			ValueCheck valueCheck = new ValueCheck();
+			List<String> errors = valueCheck.createWeaponValueCheck(type, name, range, damage, sub, special);
+
+			if (!errors.isEmpty()) {
+				// エラーメッセージをリクエストに設定
+				request.setAttribute("errors", errors);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/createWeapon.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
 
 			Weapon weapon = new Weapon(type, name, range, damage, sub, special);
 			CreateWeaponLogic bo = new CreateWeaponLogic();

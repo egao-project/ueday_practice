@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.UpdateWeapontLogic;
+import model.ValueCheck;
 import model.Weapon;
 
 /**
@@ -25,15 +27,35 @@ public class UpdateWeaponServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int weaponId = Integer.parseInt(request.getParameter("weaponId"));
+		String type = request.getParameter("type");
+		String name = request.getParameter("name");
+		String range = request.getParameter("range");
+		String damage = request.getParameter("damage");
+		String sub = request.getParameter("sub");
+		String special = request.getParameter("special");
+
+		//文字入力チェック
+		ValueCheck valueCheck = new ValueCheck();
+		List<String> errors = valueCheck.createWeaponValueCheck(type, name, range, damage, sub, special);
+
+		if (!errors.isEmpty()) {
+			// エラーメッセージをリクエストに設定
+			request.setAttribute("errors", errors);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/editWeapon.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
 		Weapon editWeapon = new Weapon();
 
-		editWeapon.setWeaponId(Integer.parseInt(request.getParameter("weaponId")));
-		editWeapon.setName(request.getParameter("name"));
-		editWeapon.setType(request.getParameter("type"));
-		editWeapon.setRange(request.getParameter("range"));
-		editWeapon.setDamage(request.getParameter("damage"));
-		editWeapon.setSub(request.getParameter("sub"));
-		editWeapon.setSpecial(request.getParameter("special"));
+		editWeapon.setWeaponId(weaponId);
+		editWeapon.setName(name);
+		editWeapon.setType(type);
+		editWeapon.setRange(range);
+		editWeapon.setDamage(damage);
+		editWeapon.setSub(sub);
+		editWeapon.setSpecial(special);
 
 		UpdateWeapontLogic bo = new UpdateWeapontLogic();
 		boolean result = bo.execute(editWeapon);

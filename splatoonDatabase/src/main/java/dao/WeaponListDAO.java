@@ -1,37 +1,26 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.DBConnectionManager;
 import model.Weapon;
 
 public class WeaponListDAO {
-	private final String JDBC_URL = "jdbc:mysql://localhost/splatoon3_database";
-	private final String DB_USER = "test";
-	private final String DB_PASS = "2525";
 
 	public List<Weapon> allWeaponData() {
 
 		List<Weapon> weaponList = new ArrayList<Weapon>();
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-		}
+		//SELECT文を準備
+		String sql = "SELECT * FROM weapons";
 
 		//データベースに接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-
-			//SELECT文を準備
-			String sql = "SELECT * FROM weapons";
+		try {
+			Connection conn = DBConnectionManager.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			ResultSet rs = pStmt.executeQuery();
@@ -59,21 +48,14 @@ public class WeaponListDAO {
 
 	//ブキ編集の際に、初期値を設定するためのメソッド
 	public Weapon editWeaponData(String weaponId) {
-
+		//SELECT文を準備
+		String sql = "SELECT type, name, weapon_range, damage, sub, special FROM weapons WHERE weapon_id = ?";
 		Weapon weapon = new Weapon();
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-		}
 
 		//データベースに接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+			Connection conn = DBConnectionManager.getConnection();
 
-			//SELECT文を準備
-			String sql = "SELECT type, name, weapon_range, damage, sub, special FROM weapons WHERE weapon_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, weaponId);
 
@@ -108,19 +90,12 @@ public class WeaponListDAO {
 		String sub = editWeapon.getSub();
 		String special = editWeapon.getSpecial();
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-		}
+		//UPDATE文を準備
+		String sql = "UPDATE weapons SET type = ?, name = ?, weapon_range = ?, damage = ?, sub = ?, special = ? WHERE weapon_id = ?";
 
 		//データベースに接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-
-			//SELECT文を準備
-			String sql = "UPDATE weapons SET type = ?, name = ?, weapon_range = ?, damage = ?, sub = ?, special = ? WHERE weapon_id = ?";
+		try {
+			Connection conn = DBConnectionManager.getConnection();
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -150,18 +125,13 @@ public class WeaponListDAO {
 
 	public boolean deleteWeapon(String[] weaponIds) {
 		// TODO 自動生成されたメソッド・スタブ
+		//DELETE文を準備
+		String sql = "DELETE FROM weapons WHERE weapon_id = ?";
 
+		//データベースに接続
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DBConnectionManager.getConnection();
 
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-		} //データベースに接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-
-			//SELECT文を準備
-			String sql = "DELETE FROM weapons WHERE weapon_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			for (String weaponId : weaponIds) {
 				pStmt.setString(1, weaponId);
@@ -183,20 +153,13 @@ public class WeaponListDAO {
 
 	public boolean createWeapon(Weapon weapon) {
 		// TODO 自動生成されたメソッド・スタブ
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-		}
-
+		//INSERT文を準備
+		String sql = "INSERT INTO weapons (type, name, weapon_range, damage, sub, special)\n"
+				+ "VALUE(?,?,?,?,?,?)";
 		//データベースに接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+			Connection conn = DBConnectionManager.getConnection();
 
-			//SELECT文を準備
-			String sql = "INSERT INTO weapons (type, name, weapon_range, damage, sub, special)\n"
-					+ "VALUE(?,?,?,?,?,?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, weapon.getType());
 			pStmt.setString(2, weapon.getName());

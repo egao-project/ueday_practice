@@ -9,14 +9,21 @@
 </head>
 <body>
 <h1>ブキ新規登録</h1>
+<c:if test="${not empty errors}">
+    <ul style="color: red;">
+        <c:forEach var="error" items="${errors}">
+            <li>${error}</li>
+        </c:forEach>
+    </ul>
+</c:if>
     <form action="CreateWeaponServlet" method="post">
         <input type="hidden" name="flag" value="create">
-        名前:<input type="text" name="name" required><br>
-        種類:<input type="text" name="type" required><br>
-        射程:<input type="text" name="range" required><br>
-        ダメージ:<input type="text" name="damage" required><br>
-        サブ:<input type="text" name="sub" required><br>
-        スペシャル:<input type="text" name="special" required><br>
+        名前:<input type="text" name="name" required pattern="^.{1,20}$" title="20文字以内で入力してください。"><br>
+        種類:<input type="text" name="type" required pattern="^[ァ-ヶー]{1,10}+$" title="全角カタカナ、10文字以内で入力してください。"><br>
+        射程:<input type="text" name="range" required pattern="^[0-9.]{1,5}+$" title="半角数字と.(ドット)、5文字以内で入力してください。"><br>
+        ダメージ:<input type="text" name="damage" required pattern="^[0-9.]{1,10}+$" title="半角数字と.(ドット)、10文字以内で入力してください。"><br>
+        サブ:<input type="text" name="sub" required pattern="^[ァ-ヶー]{1,20}+$" title="全角カタカナ、20文字以内で入力してください。"><br>
+        スペシャル:<input type="text" name="special" required pattern="^[ァ-ヶー]{1,20}+$" title="全角カタカナ、20文字以内で入力してください。"><br>
         <input type="submit" value="登録">
     </form>
     <a href="WeaponListServlet">ブキ一覧画面へ</a>
