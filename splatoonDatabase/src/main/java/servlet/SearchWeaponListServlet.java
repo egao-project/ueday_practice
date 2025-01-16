@@ -14,10 +14,10 @@ import model.GetWeaoponListLogic;
 import model.Weapon;
 
 /**
- * Servlet implementation class WeaponListServlet
+ * Servlet implementation class SearchWeaponListServlet
  */
-@WebServlet("/WeaponListServlet")
-public class WeaponListServlet extends HttpServlet {
+@WebServlet("/SearchWeaponListServlet")
+public class SearchWeaponListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,37 +26,6 @@ public class WeaponListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String searchBy = request.getParameter("searchBy");
-		String searchKeyword = request.getParameter("searchKeyword");
-		String matchType = request.getParameter("matchType");
-
-		// 初期値のセット
-		if (searchBy == null)
-			searchBy = "type";
-		if (searchKeyword == null)
-			searchKeyword = "";
-		if (matchType == null)
-			matchType = "partial";
-
-		GetWeaoponListLogic getWeaponListLogic = new GetWeaoponListLogic();
-		List<Weapon> weaponList = getWeaponListLogic.getAllWeaponListLogic();
-
-		if (weaponList.size() == 0) {
-			request.setAttribute("mismatchMsg", "条件に一致するブキがありません");
-		}
-
-		request.setAttribute("weaponList", weaponList);
-		request.setAttribute("searchBy", searchBy);
-		request.setAttribute("searchKeyword", searchKeyword);
-		request.setAttribute("matchType", matchType);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/weaponList.jsp");
-		dispatcher.forward(request, response);
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		String message = (String) request.getAttribute("message");
 		String searchBy = request.getParameter("searchBy");
 		String searchKeyword = request.getParameter("searchKeyword");
@@ -75,7 +44,12 @@ public class WeaponListServlet extends HttpServlet {
 			matchType = "partial";
 
 		GetWeaoponListLogic getWeaponListLogic = new GetWeaoponListLogic();
-		List<Weapon> weaponList = getWeaponListLogic.getAllWeaponListLogic();
+		List<Weapon> weaponList = getWeaponListLogic.getSearchWeaponListLogic(searchBy, searchKeyword, matchType);
+
+		if (weaponList.size() == 0) {
+
+			request.setAttribute("mismatchMsg", "条件に一致するブキがありません");
+		}
 
 		request.setAttribute("weaponList", weaponList);
 		request.setAttribute("searchBy", searchBy);

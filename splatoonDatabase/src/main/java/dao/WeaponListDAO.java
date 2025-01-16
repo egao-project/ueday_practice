@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.DBConnectionManager;
 import model.Weapon;
 
 public class WeaponListDAO {
-
+	// ブキのリストを全件取得
 	public List<Weapon> allWeaponData() {
 
 		List<Weapon> weaponList = new ArrayList<Weapon>();
@@ -43,6 +42,82 @@ public class WeaponListDAO {
 			System.out.println("エラーが発生しました");
 			return null;
 		}
+		return weaponList;
+	}
+
+	// ブキのリストをフィルタリングして取得(部分一致)
+	public List<Weapon> searchWeaponDataPartial(String searchBy, String searchKeyword) {
+
+		List<Weapon> weaponList = new ArrayList<Weapon>();
+		//SELECT文を準備
+		String sql = "SELECT * FROM weapons WHERE " + searchBy + " LIKE ?";
+
+		//データベースに接続
+		try {
+			Connection conn = DBConnectionManager.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			pStmt.setString(1, searchKeyword);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				int weaponId = rs.getInt("weapon_id");
+				String type = rs.getString("type");
+				String name = rs.getString("name");
+				String range = rs.getString("weapon_range");
+				String damage = rs.getString("damage");
+				String sub = rs.getString("sub");
+				String special = rs.getString("special");
+				Weapon weapon = new Weapon(weaponId, type, name, range, damage, sub, special);
+				weaponList.add(weapon);
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("エラーが発生しました");
+			return null;
+		}
+		return weaponList;
+	}
+
+	// ブキのリストをフィルタリングして取得(完全一致)
+	public List<Weapon> searchWeaponDataExact(String searchBy, String searchKeyword) {
+
+		List<Weapon> weaponList = new ArrayList<Weapon>();
+		//SELECT文を準備
+		String sql = "SELECT * FROM weapons WHERE " + searchBy + " = ?";
+
+		//データベースに接続
+		try {
+
+			Connection conn = DBConnectionManager.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			pStmt.setString(1, searchKeyword);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				int weaponId = rs.getInt("weapon_id");
+				String type = rs.getString("type");
+				String name = rs.getString("name");
+				String range = rs.getString("weapon_range");
+				String damage = rs.getString("damage");
+				String sub = rs.getString("sub");
+				String special = rs.getString("special");
+				Weapon weapon = new Weapon(weaponId, type, name, range, damage, sub, special);
+				weaponList.add(weapon);
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("エラーが発生しました");
+			return null;
+		}
+
 		return weaponList;
 	}
 

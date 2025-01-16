@@ -1,3 +1,5 @@
 "# ueday_practice" 
 "2024/12/04 splatoonDatabase weaponListから登録編集削除ができるよう修正"
 "2024/12/14 splatoonDatabase ブキ編集画面に初期値を設定・ブキの絞り込み検索ができるように修正"
+"2025/01/08 splatoonDatabase コネクションの取得を共通化・桁数チェックの実装"
+"2025/01/16 splatoonDatabase 検索処理をDBで実施するよう修正・誤ったパッケージに属していたクラスを修正"

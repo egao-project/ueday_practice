@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.CreateWeaponLogic;
-import model.ValueCheck;
 import model.Weapon;
 
 /**
