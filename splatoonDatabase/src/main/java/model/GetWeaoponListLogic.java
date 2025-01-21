@@ -20,15 +20,14 @@ public class GetWeaoponListLogic {
 		List<Weapon> weaponList = null;
 
 		if (matchType.equals("partial")) { // 検索パターンが部分一致の場合
-			System.out.println("bubunnitti");
+
 			weaponList = dao.searchWeaponDataPartial(searchBy, searchKeyword);
-			System.out.println(weaponList.size());
+
 			return weaponList;
 
 		} else if (matchType.equals("exact")) { // 検索パターンが完全一致の場合
 
 			weaponList = dao.searchWeaponDataExact(searchBy, searchKeyword);
-			System.out.println(weaponList.size());
 			return weaponList;
 
 		}

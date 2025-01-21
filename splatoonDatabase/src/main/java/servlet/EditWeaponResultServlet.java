@@ -16,8 +16,8 @@ import model.Weapon;
 /**
  * Servlet implementation class UpdateWeaponServlet
  */
-@WebServlet("/UpdateWeaponServlet")
-public class UpdateWeaponServlet extends HttpServlet {
+@WebServlet("/EditWeaponResultServlet")
+public class EditWeaponResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -36,7 +36,7 @@ public class UpdateWeaponServlet extends HttpServlet {
 
 		//文字入力チェック
 		ValueCheck valueCheck = new ValueCheck();
-		List<String> errors = valueCheck.createWeaponValueCheck(type, name, range, damage, sub, special);
+		List<String> errors = valueCheck.weaponValueCheck(type, name, range, damage, sub, special);
 
 		if (!errors.isEmpty()) {
 			// エラーメッセージをリクエストに設定
@@ -63,7 +63,7 @@ public class UpdateWeaponServlet extends HttpServlet {
 			request.setAttribute("message", "更新に失敗しました");
 		} else {
 			request.setAttribute("message", "更新に成功しました");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/updateWeaponResult.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/editWeaponResult.jsp");
 			dispatcher.forward(request, response);
 		}
 

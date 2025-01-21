@@ -16,7 +16,7 @@
         </c:forEach>
     </ul>
 </c:if>
-	<form action="UpdateWeaponServlet" method="post">
+	<form action="EditWeaponResultServlet" method="post">
 		<input type="hidden" name="weaponId" value="${weaponId}">
 		名前:<input type="text" name="name" value="${weapon.name}" required pattern="^.{1,20}$" title="20文字以内で入力してください。"><br>
 		種類:<input type="text" name="type" value="${weapon.type}" required pattern="^[ァ-ヶー]{1,10}+$" title="全角カタカナ、10文字以内で入力してください。"><br>

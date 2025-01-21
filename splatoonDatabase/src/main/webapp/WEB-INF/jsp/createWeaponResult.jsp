@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ブキ登録完了</title>
+<title>ブキ登録結果</title>
 </head>
 <body>
 	<p><c:out value="${message}" /></p>

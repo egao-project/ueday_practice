@@ -57,7 +57,7 @@ public class WeaponListDAO {
 			Connection conn = DBConnectionManager.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			pStmt.setString(1, searchKeyword);
+			pStmt.setString(1, "%" + searchKeyword + "%");
 
 			ResultSet rs = pStmt.executeQuery();
 

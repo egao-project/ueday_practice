@@ -45,7 +45,7 @@ public class CreateWeaponServlet extends HttpServlet {
 			String special = request.getParameter("special");
 
 			ValueCheck valueCheck = new ValueCheck();
-			List<String> errors = valueCheck.createWeaponValueCheck(type, name, range, damage, sub, special);
+			List<String> errors = valueCheck.weaponValueCheck(type, name, range, damage, sub, special);
 
 			if (!errors.isEmpty()) {
 				// エラーメッセージをリクエストに設定

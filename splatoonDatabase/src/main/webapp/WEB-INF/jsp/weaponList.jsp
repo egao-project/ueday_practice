@@ -13,7 +13,7 @@
     <c:out value="${message}"/>
 </c:if>
 <br>
-<form action="SearchWeaponListServlet" method="get">
+<form action="WeaponListServlet" method="get">
 	<fieldset>
 		<legend>絞り込み検索</legend>
 		<label for="searchBy">検索項目</label>

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValueCheck {
-	public List<String> createWeaponValueCheck(String type, String name, String range, String damage, String sub,
+	public List<String> weaponValueCheck(String type, String name, String range, String damage, String sub,
 			String special) {
+
 		List<String> errors = new ArrayList<>();
 		// ブキ名の入力チェック
 		if (name.length() > 20) {
@@ -48,6 +49,17 @@ public class ValueCheck {
 		}
 
 		return errors;
+	}
+
+	public String searchValueCheck(String searchKeyword) {
+
+		String error = null;
+
+		if (searchKeyword.length() > 20)
+			error = "検索キーワードは20文字以内で入力してください。";
+
+		return error;
+
 	}
 
 }
