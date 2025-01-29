@@ -17,12 +17,31 @@
 	<fieldset>
 		<legend>絞り込み検索</legend>
 		<label for="searchBy">検索項目</label>
-		<select id="searchBy" name="searchBy">
-		    <option value="type" <c:if test="${searchBy == 'type'}">selected</c:if>>ブキ種別</option>
-			<option value="name" <c:if test="${searchBy == 'name'}">selected</c:if>>ブキ名</option>
-			<option value="sub" <c:if test="${searchBy == 'sub'}">selected</c:if>>サブ</option>
-			<option value="special" <c:if test="${searchBy == 'special'}">selected</c:if>>スペシャル</option>
-		</select>
+		<label><input type="checkbox" name="searchBy" value="type"
+		      <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'type'}">checked</c:if>
+              </c:forEach>>ブキ種別</label>
+        <label><input type="checkbox" name="searchBy" value="name"
+              <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'name'}">checked</c:if>
+              </c:forEach>>ブキ名</label>
+        <label><input type="checkbox" name="searchBy" value="range"
+              <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'range'}">checked</c:if>
+              </c:forEach>>射程</label>
+        <label><input type="checkbox" name="searchBy" value="damage"
+              <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'damage'}">checked</c:if>
+              </c:forEach>>威力</label>
+        <label><input type="checkbox" name="searchBy" value="sub"
+              <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'sub'}">checked</c:if>
+              </c:forEach>>サブ</label>
+        <label><input type="checkbox" name="searchBy" value="special"
+              <c:forEach var="item" items="${searchBy}">
+                    <c:if test="${item == 'special'}">checked</c:if>
+              </c:forEach>>スペシャル</label>
+        <br>
 		<label for="searchKeyword">キーワード</label>
 	    <input type="text" id="searchKeyword" name="searchKeyword"value="<c:out value='${searchKeyword}'/>" />
 		<label>

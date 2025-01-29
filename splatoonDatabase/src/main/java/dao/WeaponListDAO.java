@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import model.Weapon;
 
@@ -46,18 +49,52 @@ public class WeaponListDAO {
 	}
 
 	// ブキのリストをフィルタリングして取得(部分一致)
-	public List<Weapon> searchWeaponDataPartial(String searchBy, String searchKeyword) {
+	public List<Weapon> searchWeaponDataPartial(String[] searchBy, String searchKeyword) {
 
 		List<Weapon> weaponList = new ArrayList<Weapon>();
 		//SELECT文を準備
-		String sql = "SELECT * FROM weapons WHERE " + searchBy + " LIKE ?";
+		StringBuilder sql = new StringBuilder("SELECT * FROM weapons");//メモ：Stringより文字列連結の効率が良い
+		Set<String> set = new HashSet<String>(Arrays.asList(searchBy));
+		List<String> conditions = new ArrayList<>();
+		List<String> params = new ArrayList<>();
+
+		if (searchBy != null && searchBy.length > 0) {
+			// 検索項目が存在する場合条件式を追加
+			sql.append(" WHERE ");
+			if (set.contains("type")) {
+				conditions.add("type LIKE ?");
+			}
+			if (set.contains("name")) {
+				conditions.add("name LIKE ?");
+			}
+			if (set.contains("range")) {
+				conditions.add("range LIKE ?");
+			}
+			if (set.contains("damage")) {
+				conditions.add("damage LIKE ?");
+			}
+			if (set.contains("sub")) {
+				conditions.add("sub LIKE ?");
+			}
+			if (set.contains("special")) {
+				conditions.add("special LIKE ?");
+			}
+			// joinでORを追加し結合
+			sql.append(String.join(" OR ", conditions));
+		}
+
+		for (int i = 0; i < conditions.size(); i++) {
+			params.add("%" + searchKeyword + "%");
+		}
 
 		//データベースに接続
 		try {
 			Connection conn = DBConnectionManager.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			PreparedStatement pStmt = conn.prepareStatement(sql.toString());
 
-			pStmt.setString(1, "%" + searchKeyword + "%");
+			for (int i = 0; i < params.size(); i++) {
+				pStmt.setString(i + 1, params.get(i));
+			}
 
 			ResultSet rs = pStmt.executeQuery();
 
@@ -83,19 +120,51 @@ public class WeaponListDAO {
 	}
 
 	// ブキのリストをフィルタリングして取得(完全一致)
-	public List<Weapon> searchWeaponDataExact(String searchBy, String searchKeyword) {
+	public List<Weapon> searchWeaponDataExact(String[] searchBy, String searchKeyword) {
 
 		List<Weapon> weaponList = new ArrayList<Weapon>();
 		//SELECT文を準備
-		String sql = "SELECT * FROM weapons WHERE " + searchBy + " = ?";
+		StringBuilder sql = new StringBuilder("SELECT * FROM weapons");
+		Set<String> set = new HashSet<String>(Arrays.asList(searchBy));
+		List<String> conditions = new ArrayList<>();
+		List<String> params = new ArrayList<>();
+
+		if (searchBy != null && searchBy.length > 0) {
+			sql.append(" WHERE ");
+			if (set.contains("type")) {
+				conditions.add("type = ?");
+			}
+			if (set.contains("name")) {
+				conditions.add("name = ?");
+			}
+			if (set.contains("range")) {
+				conditions.add("range = ?");
+			}
+			if (set.contains("damage")) {
+				conditions.add("damage = ?");
+			}
+			if (set.contains("sub")) {
+				conditions.add("sub = ?");
+			}
+			if (set.contains("special")) {
+				conditions.add("special = ?");
+			}
+			sql.append(String.join(" OR ", conditions));
+		}
+
+		for (int i = 0; i < conditions.size(); i++) {
+			params.add(searchKeyword);
+		}
 
 		//データベースに接続
 		try {
 
 			Connection conn = DBConnectionManager.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			PreparedStatement pStmt = conn.prepareStatement(sql.toString());
 
-			pStmt.setString(1, searchKeyword);
+			for (int i = 0; i < params.size(); i++) {
+				pStmt.setString(i + 1, params.get(i));
+			}
 
 			ResultSet rs = pStmt.executeQuery();
 

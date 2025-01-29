@@ -29,22 +29,20 @@ public class WeaponListServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 絞り込み検索実行時に送られてくる値を取得
-		String searchBy = request.getParameter("searchBy");
+		String[] searchBy = request.getParameterValues("searchBy");
 		String searchKeyword = request.getParameter("searchKeyword");
 		String matchType = request.getParameter("matchType");
 
 		HttpSession session = request.getSession();
 
-		if (searchBy == null || searchKeyword == null || matchType == null) {
+		if (searchBy == null && matchType == null) {
 			// 絞り込み検索を行っていない場合、セッションに保持されている値を取得
-			searchBy = (String) session.getAttribute("searchBy");
+			searchBy = (String[]) session.getAttribute("searchBy");
 			searchKeyword = (String) session.getAttribute("searchKeyword");
 			matchType = (String) session.getAttribute("matchType");
 
 		}
 		// 初回の画面遷移時に初期値をセット
-		if (searchBy == null)
-			searchBy = "type";
 		if (searchKeyword == null)
 			searchKeyword = "";
 		if (matchType == null)
@@ -55,7 +53,7 @@ public class WeaponListServlet extends HttpServlet {
 		GetWeaoponListLogic getWeaponListLogic = new GetWeaoponListLogic();
 
 		if (searchKeyword == "") {
-			// ブキ一覧を全件取得
+			// 検索キーワードが空白の場合、ブキ一覧を全件取得
 			weaponList = getWeaponListLogic.getAllWeaponListLogic();
 
 			if (weaponList.size() == 0 || weaponList == null)
@@ -70,7 +68,7 @@ public class WeaponListServlet extends HttpServlet {
 
 		}
 
-		session.setAttribute("weaponList", weaponList);
+		request.setAttribute("weaponList", weaponList);
 		session.setAttribute("searchBy", searchBy);
 		session.setAttribute("searchKeyword", searchKeyword);
 		session.setAttribute("matchType", matchType);
@@ -83,22 +81,20 @@ public class WeaponListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String searchBy = request.getParameter("searchBy");
+		String[] searchBy = request.getParameterValues("searchBy");
 		String searchKeyword = request.getParameter("searchKeyword");
 		String matchType = request.getParameter("matchType");
 
 		HttpSession session = request.getSession();
 
-		if (searchBy == null || searchKeyword == null || matchType == null) {
+		if (searchBy == null && matchType == null) {
 
-			searchBy = (String) session.getAttribute("searchBy");
+			searchBy = (String[]) session.getAttribute("searchBy");
 			searchKeyword = (String) session.getAttribute("searchKeyword");
 			matchType = (String) session.getAttribute("matchType");
 
 		}
 
-		if (searchBy == null)
-			searchBy = "type";
 		if (searchKeyword == null)
 			searchKeyword = "";
 		if (matchType == null)
@@ -122,7 +118,7 @@ public class WeaponListServlet extends HttpServlet {
 				request.setAttribute("mismatchMsg", "条件に一致するブキがありません");
 
 		}
-		session.setAttribute("weaponList", weaponList);
+		request.setAttribute("weaponList", weaponList);
 		session.setAttribute("searchBy", searchBy);
 		session.setAttribute("searchKeyword", searchKeyword);
 		session.setAttribute("matchType", matchType);

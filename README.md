@@ -4,3 +4,4 @@
 "2025/01/08 splatoonDatabase コネクションの取得を共通化・桁数チェックの実装"
 "2025/01/16 splatoonDatabase 検索処理をDBで実施するよう修正・誤ったパッケージに属していたクラスを修正"
 "2025/01/22 splatoonDatabase ブキ編集・登録・削除結果確認画面からブキ一覧画面に戻った際に、検索結果を保持するように修正"
+"2025/01/29 splatoonDatabase ブキ一覧画面で複合検索ができるよう修正・weaponListの保存先をsessionからrequestに変更"

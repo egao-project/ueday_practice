@@ -15,7 +15,7 @@ public class GetWeaoponListLogic {
 		return weaponList;
 	}
 
-	public List<Weapon> getSearchWeaponListLogic(String searchBy, String searchKeyword, String matchType) {
+	public List<Weapon> getSearchWeaponListLogic(String[] searchBy, String searchKeyword, String matchType) {
 		WeaponListDAO dao = new WeaponListDAO();
 		List<Weapon> weaponList = null;
 
