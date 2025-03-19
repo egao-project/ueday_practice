@@ -10,9 +10,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import DTO.WeaponListDTO;
 import model.Weapon;
+import util.DBConnectionManager;
 
 public class WeaponListDAO {
+
 	// ブキのリストを全件取得
 	public List<Weapon> allWeaponData() {
 
@@ -68,7 +71,7 @@ public class WeaponListDAO {
 				conditions.add("name LIKE ?");
 			}
 			if (set.contains("range")) {
-				conditions.add("range LIKE ?");
+				conditions.add("weapon_range LIKE ?");
 			}
 			if (set.contains("damage")) {
 				conditions.add("damage LIKE ?");
@@ -138,7 +141,7 @@ public class WeaponListDAO {
 				conditions.add("name = ?");
 			}
 			if (set.contains("range")) {
-				conditions.add("range = ?");
+				conditions.add("weapon_range = ?");
 			}
 			if (set.contains("damage")) {
 				conditions.add("damage = ?");
@@ -224,7 +227,9 @@ public class WeaponListDAO {
 		return weapon;
 	}
 
-	public boolean updateWeapon(Weapon editWeapon) {
+	// ブキ編集画面
+	public WeaponListDTO editWeapon(Weapon editWeapon) {
+		WeaponListDTO weaponListDTO = new WeaponListDTO();
 		// TODO 自動生成されたメソッド・スタブ
 		int weaponId = editWeapon.getWeaponId();
 		String type = editWeapon.getType();
@@ -254,21 +259,25 @@ public class WeaponListDAO {
 			int result = pStmt.executeUpdate();
 
 			if (result == 0) {
-				return false;
+				weaponListDTO.setMessage("ブキデータの更新に失敗しました");
+			} else {
+				weaponListDTO.setMessage("ブキデータの更新に成功しました");
 			}
 
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.out.println("エラーが発生しました");
-			return false;
+			return weaponListDTO;
 		}
-		return true;
+		return weaponListDTO;
 
 	}
 
-	public boolean deleteWeapon(String[] weaponIds) {
+	// ブキ削除
+	public WeaponListDTO deleteWeapon(String[] weaponIds) {
 		// TODO 自動生成されたメソッド・スタブ
+		WeaponListDTO weaponListDTO = new WeaponListDTO();
 		//DELETE文を準備
 		String sql = "DELETE FROM weapons WHERE weapon_id = ?";
 
@@ -281,7 +290,9 @@ public class WeaponListDAO {
 				pStmt.setString(1, weaponId);
 				int result = pStmt.executeUpdate();
 				if (result == 0) {
-					return false;
+					weaponListDTO.setMessage("データの削除に失敗しました");
+				} else {
+					weaponListDTO.setMessage("データの削除に成功しました");
 				}
 			}
 
@@ -289,14 +300,16 @@ public class WeaponListDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.out.println("エラーが発生しました");
-			return false;
+			return weaponListDTO;
 		}
-		return true;
+		return weaponListDTO;
 
 	}
 
-	public boolean createWeapon(Weapon weapon) {
+	// ブキ登録画面
+	public WeaponListDTO registerWeapon(Weapon weapon) {
 		// TODO 自動生成されたメソッド・スタブ
+		WeaponListDTO weaponListDTO = new WeaponListDTO();
 		//INSERT文を準備
 		String sql = "INSERT INTO weapons (type, name, weapon_range, damage, sub, special)\n"
 				+ "VALUE(?,?,?,?,?,?)";
@@ -315,16 +328,18 @@ public class WeaponListDAO {
 			int result = pStmt.executeUpdate();
 
 			if (result == 0) {
-				return false;
+				weaponListDTO.setMessage("ブキデータの登録に失敗しました");
+			} else {
+				weaponListDTO.setMessage("ブキデータの登録に成功しました");
 			}
 
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.out.println("エラーが発生しました");
-			return false;
+			return weaponListDTO;
 		}
-		return true;
+		return weaponListDTO;
 	}
 
 }

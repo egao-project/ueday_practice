@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import model.Account;
-import model.CreateAccountLogic;
+import service.CreateAccountLogic;
 
 /**
  * Servlet implementation class UserCreate

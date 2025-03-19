@@ -8,7 +8,14 @@
 </head>
 <body>
 メニュー<br>
-<a href="LoginServlet">・ログイン</a><br>
-<a href="CreateAccountServlet">・ユーザ登録 </a><br>
+    <form method="get" action="MainController">
+        <input type="hidden" name="action" value="login">
+        <button type="submit">ログイン</button>
+    </form>
+    <br>
+<!--    <form method="get" action="MainServlet">-->
+<!--	    <input type="hidden" name="action" value="registerUser">-->
+<!--	    <button type="submit">ユーザ登録</button>-->
+<!--    </form>-->
 </body>
 </html>

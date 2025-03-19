@@ -8,7 +8,8 @@
 </head>
 <body>
 <h1>ようこそ</h1>
-<form action="LoginServlet" method="post">
+<form action="MainController" method="post">
+    <input type="hidden" name="action" value="loginCheck">
     ユーザID:<input type="text" name="userId">
     <br>
     パスワード:<input type="password" name="pass">
@@ -16,6 +17,9 @@
     <input type="submit" value="ログイン">
     <br>
 </form>
-<a href="TopServlet">トップへ</a>
+<form action="MainController" method="post">
+    <input type="hidden" name="action" value="top">
+    <button type="submit">トップ画面へ</button>
+</form>
 </body>
 </html>

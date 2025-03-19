@@ -8,6 +8,9 @@
 </head>
 <body>
 	ログアウトしました<br>
-	<a href="TopServlet">トップへ</a>
+<form method="post" action="MainController">
+	<input type="hidden" name="action" value="top">
+    <button type="submit">トップへ</button>
+</form>
 </body>
 </html>

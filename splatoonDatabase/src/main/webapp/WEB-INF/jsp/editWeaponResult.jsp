@@ -8,7 +8,9 @@
 <title>ブキ更新結果</title>
 </head>
 <body>
-	<p><c:out value="${message}" /></p>
-    <a href="WeaponListServlet">ブキ一覧画面へ</a>
+	<p><c:out value="${dataMap.message}" /></p>
+	<form action="MainController" method="get">
+    <button type="submit" name="action" value="getWeaponList">ブキ一覧画面へ</button> 
+    </form>
 </body>
 </html>

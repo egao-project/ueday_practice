@@ -25,10 +25,10 @@
 	        </c:forEach>
 	    </table>
 	    <br>
-	        <input type="submit" value="ユーザー情報更新" formaction="EditAccountsServlet">
-	        <input type="submit" value="ユーザー削除" formaction="DeleteAccountServlet">
+	        <input type="submit" value="ユーザー情報更新" formaction="MainController">
+	        <input type="submit" value="ユーザー削除" formaction="MainController">
 	</form>
-	<a href="LoginServlet">戻る</a>
-	<a href="LogoutServlet">ログアウト</a>
+	<a href="MainController">戻る</a>
+	<a href="MainController">ログアウト</a>
 </body>
 </html>

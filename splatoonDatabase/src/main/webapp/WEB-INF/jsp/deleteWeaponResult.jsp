@@ -9,6 +9,8 @@
 </head>
 <body>
 	<p><c:out value="${message}" /></p>
-	<a href="WeaponListServlet">ブキ一覧画面へ</a>
+	<form action="MainController" method="get">
+	<button type="submit" name="action" value="getWeaponList">ブキ一覧画面へ</button> 
+	</form>
 </body>
 </html>

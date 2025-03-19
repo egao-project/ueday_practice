@@ -1,79 +1,41 @@
 package model;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-public class EditWeapon implements Serializable {
-	private int weaponId;
-	private String type;
-	private String name;
-	private String range;
-	private String damage;
-	private String sub;
-	private String special;
+import jakarta.servlet.ServletException;
 
-	public EditWeapon() {
+import DTO.WeaponListDTO;
+import dao.WeaponListDAO;
 
-	}
+public class EditWeapon implements Action {
 
-	public EditWeapon(int weaponId) {
-		// TODO 自動生成されたコンストラクター・スタブ
-		this.weaponId = weaponId;
-	}
+	@Override
+	public ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		Weapon weapon = new Weapon(Integer.parseInt(paramMap.get("weaponId")[0]), paramMap.get("type")[0],
+				paramMap.get("name")[0], paramMap.get("range")[0], paramMap.get("damage")[0], paramMap.get("sub")[0],
+				paramMap.get("special")[0]);
 
-	public int getWeaponId() {
-		return weaponId;
-	}
+		//文字入力チェック
+		ValueCheck valueCheck = new ValueCheck();
+		List<String> errors = valueCheck.weaponValueCheck(weapon.getType(), weapon.getName(), weapon.getRange(),
+				weapon.getDamage(), weapon.getSub(), weapon.getSpecial());
 
-	public void setWeaponId(int weaponid) {
-		this.weaponId = weaponid;
-	}
+		if (!errors.isEmpty()) {
+			// エラーメッセージをリクエストに設定
+			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/editWeapon.jsp");
+			result.addData("errors", errors);
+			return result;
+		}
+		ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/editWeaponResult.jsp");
+		WeaponListDAO dao = new WeaponListDAO();
+		WeaponListDTO weaponListDTO = dao.editWeapon(weapon);
+		result.addData("weaponList", weaponListDTO.getWeaponList());
+		result.addData("message", weaponListDTO.getMessage());
+		return result;
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRange() {
-		return range;
-	}
-
-	public void setRange(String range) {
-		this.range = range;
-	}
-
-	public String getDamage() {
-		return damage;
-	}
-
-	public void setDamage(String damage) {
-		this.damage = damage;
-	}
-
-	public String getSub() {
-		return sub;
-	}
-
-	public void setSub(String sub) {
-		this.sub = sub;
-	}
-
-	public String getSpecial() {
-		return special;
-	}
-
-	public void setSpecial(String special) {
-		this.special = special;
 	}
 
 }

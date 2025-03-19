@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Account;
-import model.LoginUser;
+import service.LoginUser;
 
 public class AccountsDAO {
 	private final String JDBC_URL = "jdbc:mysql://localhost/splatoon3_database";
@@ -30,7 +30,7 @@ public class AccountsDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT user_id, pass, name, weapon_id\n"
+			String sql = "SELECT user_id, pass, name\n"
 					+ "FROM accounts WHERE user_id=? AND pass=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginUser.getUser_id());
@@ -42,8 +42,7 @@ public class AccountsDAO {
 				String user_id = rs.getString("user_id");
 				String pass = rs.getString("pass");
 				String name = rs.getString("name");
-				int weapon_id = rs.getInt("weapon_id");
-				account = new Account(user_id, pass, name, weapon_id);
+				account = new Account(user_id, pass, name);
 			}
 
 		} catch (SQLException e) {
