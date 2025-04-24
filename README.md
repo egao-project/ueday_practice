@@ -7,3 +7,4 @@
 "2025/01/29 splatoonDatabase ブキ一覧画面で複合検索ができるよう修正・weaponListの保存先をsessionからrequestに変更"
 "2025/01/30 splatoonDatabase ブキ一覧取得時の不要なdoPostメソッドを削除"
 "2025/03/19 splatoonDatabase ①controllerを一つに統合②modelのexcute()メソッドの引数を統一③Servletにおけるパラメータ取得を処理依存しない形に変更④controllerから呼び出すmodelクラスをプロパティファイルから呼び出す形に変更"
+"2025/04/24 splatoonDatabase ブキ一覧画面の検索結果をsessionに保持

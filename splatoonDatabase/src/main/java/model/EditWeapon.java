@@ -12,7 +12,8 @@ import dao.WeaponListDAO;
 public class EditWeapon implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException {
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+			throws ServletException, IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		Weapon weapon = new Weapon(Integer.parseInt(paramMap.get("weaponId")[0]), paramMap.get("type")[0],
 				paramMap.get("name")[0], paramMap.get("range")[0], paramMap.get("damage")[0], paramMap.get("sub")[0],
@@ -25,11 +26,11 @@ public class EditWeapon implements Action {
 
 		if (!errors.isEmpty()) {
 			// エラーメッセージをリクエストに設定
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/editWeapon.jsp");
+			ExecuteResult result = new ExecuteResult(false);
 			result.addData("errors", errors);
 			return result;
 		}
-		ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/editWeaponResult.jsp");
+		ExecuteResult result = new ExecuteResult(true);
 		WeaponListDAO dao = new WeaponListDAO();
 		WeaponListDTO weaponListDTO = dao.editWeapon(weapon);
 		result.addData("weaponList", weaponListDTO.getWeaponList());

@@ -26,6 +26,8 @@
         スペシャル:<input type="text" name="special" required pattern="^[ァ-ヶー]{1,20}+$" title="全角カタカナ、20文字以内で入力してください。"><br>
         <input type="submit" value="登録">
     </form>
-    <button type="submit" name="action" value="getWeaponList">ブキ一覧画面へ</button> 
+    <form action="MainController" method="get">
+        <button type="submit" name="action" value="getWeaponList">一覧に戻る</button> 
+    </form>
 </body>
 </html>

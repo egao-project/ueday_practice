@@ -6,5 +6,6 @@ import java.util.Map;
 import jakarta.servlet.ServletException;
 
 public interface Action {
-	ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException;
+	ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+			throws ServletException, IOException;
 }

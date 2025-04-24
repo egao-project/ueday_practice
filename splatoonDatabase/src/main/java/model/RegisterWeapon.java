@@ -12,7 +12,8 @@ import dao.WeaponListDAO;
 public class RegisterWeapon implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException {
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+			throws ServletException, IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		Weapon weapon = new Weapon(paramMap.get("type")[0],
 				paramMap.get("name")[0], paramMap.get("range")[0], paramMap.get("damage")[0],
@@ -25,12 +26,12 @@ public class RegisterWeapon implements Action {
 
 		if (!errors.isEmpty()) {
 			// エラーメッセージをリクエストに設定
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/registerWeapon.jsp");
+			ExecuteResult result = new ExecuteResult(false);
 			result.addData("errors", errors);
 			return result;
 		}
 
-		ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/registerWeaponResult.jsp");
+		ExecuteResult result = new ExecuteResult(true);
 		WeaponListDAO dao = new WeaponListDAO();
 		WeaponListDTO weaponListDTO = dao.registerWeapon(weapon);
 		result.addData("weaponList", weaponListDTO.getWeaponList());

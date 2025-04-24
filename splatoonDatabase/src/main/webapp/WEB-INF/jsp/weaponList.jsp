@@ -44,7 +44,7 @@
               </c:forEach>>スペシャル</label>
         <br>
 		<label for="searchKeyword">キーワード</label>
-	    <input type="text" id="searchKeyword" name="searchKeyword"value="<c:out value='${dataMap.searchKeyword}'/>" />
+	    <input type="text" id="searchKeyword" name="searchKeyword" value="<c:out value='${dataMap.searchKeyword}'/>" />
 		<label>
 		<input type="radio" name="matchType" value="partial" <c:if test="${dataMap.matchType == 'partial'}">checked</c:if>> 部分一致
 		</label>

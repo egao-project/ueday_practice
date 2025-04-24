@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package model;
 
 import java.io.IOException;
@@ -5,7 +8,10 @@ import java.util.Map;
 
 import jakarta.servlet.ServletException;
 
-public class Login implements Action {
+/**
+ * 
+ */
+public class Home implements Action {
 
 	@Override
 	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)

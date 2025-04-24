@@ -11,7 +11,8 @@ import dao.WeaponListDAO;
 public class EditWeaponTransition implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException {
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+			throws ServletException, IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		String[] selectedWeaponIds = paramMap.get("weaponId");
 		String[] weaponIds = null;
@@ -29,7 +30,7 @@ public class EditWeaponTransition implements Action {
 			Weapon weapon = dao.editWeaponData(weaponIds[0]);
 			int weaponId = Integer.parseInt(weaponIds[0]);
 
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/editWeapon.jsp");
+			ExecuteResult result = new ExecuteResult(true);
 			//	初期入力のためのブキ情報をセット
 			result.addData("weapon", weapon);
 			result.addData("weaponId", weaponId);
@@ -42,7 +43,7 @@ public class EditWeaponTransition implements Action {
 					? "ブキが選択されていません"
 					: "編集するブキを1つ選択してください";
 
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/weaponList.jsp");
+			ExecuteResult result = new ExecuteResult(false);
 			result.addData("weaponList", weaponList);
 			result.addData("message", message);
 			return result;

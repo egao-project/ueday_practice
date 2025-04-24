@@ -8,7 +8,7 @@ import service.LoginUser;
 public class LoginCheck implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap) {
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap) {
 		// TODO 自動生成されたメソッド・スタブ
 		String[] userIdValues = paramMap.get("userId");
 		String[] passValues = paramMap.get("pass");
@@ -20,11 +20,11 @@ public class LoginCheck implements Action {
 		Account loginAccount = bo.findByLogin(loginUser);
 
 		if (loginAccount != null) {
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/home.jsp");
+			ExecuteResult result = new ExecuteResult(true);
 			result.addData("userId", loginAccount.getUserId());
 			return result;
 		} else {
-			ExecuteResult result = new ExecuteResult("WEB-INF/jsp/login.jsp");
+			ExecuteResult result = new ExecuteResult(false);
 			result.addData("massage", "ログインに失敗しました。");
 			return result;
 		}

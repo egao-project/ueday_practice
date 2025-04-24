@@ -12,7 +12,8 @@ import dao.WeaponListDAO;
 public class DeleteWeapon implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap) throws ServletException, IOException {
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+			throws ServletException, IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		String[] weaponIdsValue = paramMap.get("weaponId");
 		String[] weaponIds = null;
@@ -25,7 +26,7 @@ public class DeleteWeapon implements Action {
 		WeaponListDAO dao = new WeaponListDAO();
 
 		if (weaponIds != null && weaponIds.length > 0) {
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/deleteWeaponResult.jsp");
+			ExecuteResult result = new ExecuteResult(true);
 			WeaponListDTO weaponListDTO = dao.deleteWeapon(weaponIds);
 			result.addData("weaponList", weaponListDTO.getWeaponList());
 			result.addData("message", weaponListDTO.getMessage());
@@ -33,7 +34,7 @@ public class DeleteWeapon implements Action {
 
 		} else {
 			List<Weapon> weaponList = dao.allWeaponData();
-			ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/weaponList.jsp");
+			ExecuteResult result = new ExecuteResult(false);
 			result.addData("weaponList", weaponList);
 			result.addData("message", "削除対象のブキを選択してください");
 			return result;

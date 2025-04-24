@@ -9,60 +9,49 @@ import java.util.Map;
 import jakarta.servlet.ServletException;
 
 import dao.WeaponListDAO;
+import util.JudgeParams;
 
 public class GetWeaponList implements Action {
 
 	@Override
-	public ExecuteResult execute(Map<String, String[]> paramMap)
+	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
 			throws ServerException, IOException, ServletException {
-		// TODO 自動生成されたメソッド・スタブ
-		// 絞り込み検索実行時に送られてくる値を取得
-		String[] searchByValue = paramMap.get("searchBy");
-		String[] searchKeywordValue = paramMap.get("searchKeyword");
-		String[] matchTypeValue = paramMap.get("matchType");
-		String[] searchBy = null;
+		// paramMapを優先して取得
+		String[] searchBy = JudgeParams.getReqParam("searchBy", sessionMap, paramMap);
+		String[] searchKeywordArr = JudgeParams.getReqParam("searchKeyword", sessionMap, paramMap);
+		String[] matchTypeArr = JudgeParams.getReqParam("matchType", sessionMap, paramMap);
 
-		if (searchByValue != null) {
-			searchBy = new String[searchByValue.length];
-			for (int i = 0; i < searchByValue.length; i++) {
-				searchBy[i] = searchByValue[i];
+		String searchKeyword = (searchKeywordArr != null && searchKeywordArr.length > 0) ? searchKeywordArr[0] : "";
+		String matchType = (matchTypeArr != null && matchTypeArr.length > 0) ? matchTypeArr[0] : "partial";
+
+		List<Weapon> weaponList = new ArrayList<>();
+		String mismatchMsg = "";
+		WeaponListDAO dao = new WeaponListDAO();
+
+		if (searchKeyword.isEmpty()) {
+			weaponList = dao.allWeaponData();
+			if (weaponList == null || weaponList.isEmpty()) {
+				mismatchMsg = "表示するブキがありません";
+			}
+		} else if (matchType.equals("partial")) {
+			weaponList = dao.searchWeaponDataPartial(searchBy, searchKeyword);
+			if (weaponList == null || weaponList.isEmpty()) {
+				mismatchMsg = "条件に一致するブキがありません";
+			}
+		} else {
+			weaponList = dao.searchWeaponDataExact(searchBy, searchKeyword);
+			if (weaponList == null || weaponList.isEmpty()) {
+				mismatchMsg = "条件に一致するブキがありません";
 			}
 		}
 
-		String searchKeyword = (searchKeywordValue != null && searchKeywordValue.length > 0) ? searchKeywordValue[0]
-				: "";
-		String matchType = (matchTypeValue != null && matchTypeValue.length > 0) ? matchTypeValue[0] : "partial";
-		String mismatchMsg = "";
-
-		List<Weapon> weaponList = new ArrayList<Weapon>();
-		WeaponListDAO dao = new WeaponListDAO();
-
-		if (searchKeyword == "") {
-			// 検索キーワードが空白の場合、ブキ一覧を全件取得
-			weaponList = dao.allWeaponData();
-
-			if (weaponList.size() == 0 || weaponList == null)
-				mismatchMsg = "表示するブキがありません";
-
-		} else if (matchType.equals("partial")) {
-			// 絞り込み検索実行
-			weaponList = dao.searchWeaponDataPartial(searchBy, searchKeyword);
-			if (weaponList.size() == 0 || weaponList == null)
-				mismatchMsg = "条件に一致するブキがありません";
-
-		} else {
-			weaponList = dao.searchWeaponDataExact(searchBy, searchKeyword);
-			if (weaponList.size() == 0 || weaponList == null)
-				mismatchMsg = "条件に一致するブキがありません";
-		}
-
-		ExecuteResult result = new ExecuteResult("/WEB-INF/jsp/weaponList.jsp");
-		result.addData("mismatchMsg", mismatchMsg);
+		ExecuteResult result = new ExecuteResult(true);
 		result.addData("weaponList", weaponList);
+		result.addData("mismatchMsg", mismatchMsg);
 		result.addData("searchBy", searchBy);
 		result.addData("searchKeyword", searchKeyword);
 		result.addData("matchType", matchType);
-		return result;
 
+		return result;
 	}
 }
