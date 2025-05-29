@@ -5,26 +5,38 @@ import java.util.Map;
 
 import jakarta.servlet.ServletException;
 
-public class RegisterWeaponTransition implements Action {
+public class RegisterWeaponTransition extends AbstractModel implements Action {
+	String[] weaponId = null;
 
 	@Override
 	public ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
 			throws ServletException, IOException {
 		// TODO 自動生成されたメソッド・スタブ
-		String[] weaponId = paramMap.get("weaponId");
+		pretreatment(paramMap, sessionMap);
 
 		if (weaponId == null) {
-			ExecuteResult result = new ExecuteResult(true);
 			return result;
 
 		} else {
 			//チェックボックスをチェックしていたらフォワード
-			ExecuteResult result = new ExecuteResult(false);
-			result.addData("message", "チェックを外してから登録ボタンを押してください");
+			result.setSuccess(false);
+			postProcessing();
 			return result;
 
 		}
 
+	}
+
+	@Override
+	public void postProcessing() {
+		// TODO 自動生成されたメソッド・スタブ
+		result.addData("message", "チェックを外してから登録ボタンを押してください");
+	}
+
+	@Override
+	public void pretreatment(Map<String, String[]> parameterMap, Map<String, String[]> sessionParams) {
+		// TODO 自動生成されたメソッド・スタブ
+		weaponId = parameterMap.get("weaponId");
 	}
 
 }

@@ -6,6 +6,11 @@ import java.util.Map;
 import jakarta.servlet.ServletException;
 
 public interface Action {
-	ExecuteResult execute(Map<String, String[]> paramMap, Map<String, String[]> sessionMap)
+
+	void pretreatment(Map<String, String[]> parameterMap, Map<String, String[]> sessionParams);
+
+	ExecuteResult execute(Map<String, String[]> parameterMap, Map<String, String[]> sessionParams)
 			throws ServletException, IOException;
+
+	void postProcessing();
 }

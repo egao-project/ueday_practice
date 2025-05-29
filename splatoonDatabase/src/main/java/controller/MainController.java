@@ -67,11 +67,6 @@ public class MainController extends HttpServlet {
 		// セッションから検索条件を取得
 		Map<String, String[]> sessionParams = (Map<String, String[]>) session.getAttribute("sessionParams");
 
-		if (sessionParams != null) {
-			for (Map.Entry<String, String[]> entry : sessionParams.entrySet()) {
-				parameterMap.putIfAbsent(entry.getKey(), entry.getValue());
-			}
-		}
 		// アクションデータを取得（デフォルトは NotFoundAction）
 		ActionData actionData = actions.getOrDefault(action, new ActionData(
 				new NotFoundAction(), "/WEB-INF/jsp/notFound.jsp", "/WEB-INF/jsp/notFound.jsp"));
@@ -79,7 +74,7 @@ public class MainController extends HttpServlet {
 		Action executeAction = actionData.getAction();
 		result = executeAction.execute(parameterMap, sessionParams);
 		request.setAttribute("dataMap", result.getData());
-
+		// resultからセッションに使うデータをセッションに保存
 		Map<String, String[]> sessionToParams = SessionParamUtil.sessionParams(result.getData());
 		if (sessionToParams != null) {
 			session.setAttribute("sessionParams", sessionToParams);

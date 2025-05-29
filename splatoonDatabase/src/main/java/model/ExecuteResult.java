@@ -42,6 +42,10 @@ public class ExecuteResult {
 		return sessionData;
 	}
 
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
 	public boolean isSuccess() {
 		return success;
 	}

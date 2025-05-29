@@ -2,8 +2,20 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ValueCheck {
+	Map<String, String[]> paramMap;
+
+	public ValueCheck(Map<String, String[]> paramMap) {
+		this.paramMap = paramMap;
+
+	}
+
+	public ValueCheck() {
+		// TODO 自動生成されたコンストラクター・スタブ
+	}
+
 	public List<String> weaponValueCheck(String type, String name, String range, String damage, String sub,
 			String special) {
 
