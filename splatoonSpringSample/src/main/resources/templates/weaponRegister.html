@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+    <title>ブキ登録画面</title>
+    </head>
+    <body>
+    <h1>ブキ新規登録</h1>
+        <form  th:action="@{/saveWeapon}" th:object="${weapon}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            名前:<input type="text" th:field="*{name}" id="name" required pattern="^.{1,20}$" title="20文字以内で入力してください。"><br>
+            種類:<input type="text" th:field="*{type}" id="type" required pattern="^[ァ-ヶー]{1,10}+$" title="全角カタカナ、10文字以内で入力してください。"><br>
+            射程:<input type="text" th:field="*{weaponRange}" id="weaponRange" required pattern="^[0-9.]{1,5}+$" title="半角数字と.(ドット)、5文字以内で入力してください。"><br>
+            ダメージ:<input type="text" th:field="*{damage}" id="damage" required pattern="^[0-9.]{1,10}+$" title="半角数字と.(ドット)、10文字以内で入力してください。"><br>
+            サブ:<input type="text" th:field="*{sub}" id="sub" required pattern="^[ァ-ヶー]{1,20}+$" title="全角カタカナ、20文字以内で入力してください。"><br>
+            スペシャル:<input type="text" th:field="*{special}" id="special" required pattern="^[ァ-ヶー]{1,20}+$" title="全角カタカナ、20文字以内で入力してください。"><br>
+            <input type="submit" value="登録">
+        </form>
+    <a href="/index">一覧ページに戻る</a>
+    </body>
+    </html>
